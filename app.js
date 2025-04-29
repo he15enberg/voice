@@ -2,7 +2,7 @@ import express from "express";
 import connectToDatabase from "./database/mongodb.js";
 import cookieParser from "cookie-parser";
 import errorMiddleware from "./middlewares/error.middleware.js";
-
+import cors from "cors";
 // Import Routes
 import authRouter from "./routes/auth.routes.js";
 import postRouter from "./routes/post.routes.js";
@@ -11,6 +11,12 @@ import groupChatRouter from "./routes/group_chat.routes.js";
 import postGroupRouter from "./routes/post_group.routes.js";
 
 const app = express();
+app.use(
+  cors({
+    origin: "*",
+    credentials: true,
+  })
+);
 
 // Middlewares
 app.use(express.json());
