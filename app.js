@@ -32,11 +32,13 @@ app.get("/", (req, res) => {
   res.send("Welcome to Voice API");
 });
 
-// Start Server
-app.listen(3000, async () => {
-  console.log("Voice API is running on http://localhost:3000");
-
+const startServer = async () => {
   await connectToDatabase();
-});
+  app.listen(3000, () => {
+    console.log("🚀 Voice API is running at http://localhost:3000");
+  });
+};
+
+startServer(); // call async
 
 export default app;
