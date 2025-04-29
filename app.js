@@ -29,12 +29,12 @@ app.use(errorMiddleware);
 
 // Default Route
 app.get("/", (req, res) => {
-  res.send("Welcome to Hitch Handler API");
+  res.send("Welcome to Voice API");
 });
 
 // Start Server
 app.listen(3000, async () => {
-  console.log("Hitch Handler API is running on http://localhost:3000");
+  console.log("Voice API is running on http://localhost:3000");
 
   await connectToDatabase();
 });
