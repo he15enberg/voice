@@ -19,8 +19,8 @@ const messageSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ["post_message", "message"],
-      default: "message",
+      enum: ["post", "text"],
+      default: "text",
     },
     post: {
       type: mongoose.Schema.Types.ObjectId,

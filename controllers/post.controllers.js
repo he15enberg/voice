@@ -1,5 +1,6 @@
 import Post from "../models/post.model.js";
 import User from "../models/user.model.js";
+import Alert from "../models/alerts.model.js";
 import mongoose from "mongoose";
 import {
   generateGroupChatName,
@@ -47,6 +48,12 @@ export const createPost = async (req, res) => {
     });
 
     const savedPost = await newPost.save();
+    const newAlert = new Alert({
+      title: `Raised: ${title}`,
+      message: "Your query has been submitted and is waiting to be picked up.",
+      type: "info",
+    });
+    const savedAlert = await newAlert.save();
 
     // Find existing post groups with the same domain and location
     const candidateGroups = await PostGroup.find({ domain, location });
@@ -88,7 +95,7 @@ export const createPost = async (req, res) => {
             userId,
             message: "Issue group created with a new post.",
             role: "Student",
-            type: "post_message",
+            type: "post",
             post: savedPost._id,
           },
         ],

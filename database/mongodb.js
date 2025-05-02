@@ -4,7 +4,6 @@ import { DATABASE_URL } from "../config/env.js";
 if (!DATABASE_URL) {
   throw new Error("Database Url Not found.");
 }
-
 const connectToDatabase = async () => {
   try {
     await mongoose.connect(DATABASE_URL);

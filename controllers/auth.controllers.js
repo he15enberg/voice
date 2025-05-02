@@ -71,8 +71,8 @@ export const signIn = async (req, res, next) => {
 // User Login
 export const fetchUser = async (req, res, next) => {
   try {
-    const { id } = req.body;
-    const dbUser = await User.findById(id);
+    const { userId } = req.params;
+    const dbUser = await User.findById(userId);
     if (!dbUser)
       return res
         .status(404)
