@@ -306,3 +306,28 @@ export async function getSimilarPosts(req, res) {
     res.status(500).json({ error: "Failed to fetch post group" });
   }
 }
+
+export async function logPostStatus(req, res) {
+  const { postId } = req.params;
+  const { status } = req.body;
+
+  try {
+    const dbPost = await Post.findById(postId);
+    if (!dbPost) {
+      return res
+        .status(404)
+        .json({ error: "Post not found for the given Post ID" });
+    }
+
+    dbPost.status = status;
+    await dbPost.save();
+    res.status(200).json({
+      success: true,
+      message: "Post logged successfully",
+      data: dbPost,
+    });
+  } catch (err) {
+    console.error("Error fetching post group by post ID:", err);
+    res.status(500).json({ error: "Failed to fetch post group" });
+  }
+}

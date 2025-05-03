@@ -5,6 +5,7 @@ import {
   getAllPosts,
   getSimilarPosts,
   getUserPosts,
+  logPostStatus,
   votePost,
 } from "../controllers/post.controllers.js";
 
@@ -15,6 +16,7 @@ postRouter.get("/:userId", getUserPosts);
 postRouter.post("/create", createPost);
 postRouter.post("/comment/:postId", commentOnPost);
 postRouter.post("/vote/:postId", votePost);
+postRouter.post("/log/:postId", logPostStatus);
 postRouter.get("/similar-posts/:postId", getSimilarPosts);
 
 export default postRouter;
