@@ -312,6 +312,13 @@ export async function logPostStatus(req, res) {
   const { userId, status, text } = req.body;
 
   try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
     const dbPost = await Post.findById(postId);
     if (!dbPost) {
       return res
