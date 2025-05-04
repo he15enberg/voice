@@ -1,10 +1,9 @@
 import mongoose from "mongoose";
 
-// Define the PostGroup schema
 const postGroupSchema = new mongoose.Schema(
   {
     similarQueries: {
-      type: [String], // List of strings for similar queries
+      type: [String],
       required: [true, "Similar queries are required"],
     },
 
@@ -23,13 +22,12 @@ const postGroupSchema = new mongoose.Schema(
     posts: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Post", // Reference to the Post model
+        ref: "Post",
       },
     ],
   },
-  { timestamps: true } // Automatically adds createdAt and updatedAt fields
+  { timestamps: true }
 );
 
-// Create and export the PostGroup model
 const PostGroup = mongoose.model("PostGroup", postGroupSchema);
 export default PostGroup;

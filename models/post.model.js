@@ -22,7 +22,7 @@ const commentSchema = new mongoose.Schema(
       default: Date.now,
     },
   },
-  { _id: false } // prevent auto _id for each comment if not needed
+  { _id: false }
 );
 
 const postSchema = new mongoose.Schema(

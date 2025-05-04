@@ -349,7 +349,6 @@ export async function logPostStatus(req, res) {
         .json({ error: "Post group not found for this post." });
     }
 
-    // Step 2: Find GroupChat where postGroup = postGroup._id
     const dbGroupChat = await GroupChat.findOne({ postGroup: postGroup._id });
     if (!dbGroupChat) {
       return res
@@ -357,7 +356,6 @@ export async function logPostStatus(req, res) {
         .json({ error: "Group chat not found for this post group." });
     }
 
-    // New message object
     const newMessage = {
       userId,
       message: text,
@@ -366,7 +364,6 @@ export async function logPostStatus(req, res) {
       post: dbPost._id,
     };
 
-    // Push new message to the messages array
     dbGroupChat.messages.push(newMessage);
     await dbGroupChat.save();
 
