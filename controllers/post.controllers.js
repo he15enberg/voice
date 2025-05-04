@@ -93,7 +93,8 @@ export const createPost = async (req, res) => {
         messages: [
           {
             userId,
-            message: "Issue group created with a new post.",
+            message:
+              "Your query has been submitted and is waiting to be picked up.",
             role: "Student",
             type: "post",
             post: savedPost._id,
@@ -306,10 +307,9 @@ export async function getSimilarPosts(req, res) {
     res.status(500).json({ error: "Failed to fetch post group" });
   }
 }
-
 export async function logPostStatus(req, res) {
   const { postId } = req.params;
-  const { status } = req.body;
+  const { userId, status, text } = req.body;
 
   try {
     const dbPost = await Post.findById(postId);
@@ -321,13 +321,62 @@ export async function logPostStatus(req, res) {
 
     dbPost.status = status;
     await dbPost.save();
+
+    // Fix: Use let here
+    let alertType = "";
+    if (status === "Approved") {
+      alertType = "success";
+    } else if (status === "Rejected") {
+      alertType = "error";
+    } else if (status === "Processing") {
+      alertType = "warning";
+    } else {
+      alertType = "info";
+    }
+
+    const newAlert = new Alert({
+      title: `Raised: ${dbPost.title}`,
+      message: text,
+      type: alertType,
+    });
+
+    const savedAlert = await newAlert.save();
+
+    const postGroup = await PostGroup.findOne({ posts: postId });
+    if (!postGroup) {
+      return res
+        .status(404)
+        .json({ error: "Post group not found for this post." });
+    }
+
+    // Step 2: Find GroupChat where postGroup = postGroup._id
+    const dbGroupChat = await GroupChat.findOne({ postGroup: postGroup._id });
+    if (!dbGroupChat) {
+      return res
+        .status(404)
+        .json({ error: "Group chat not found for this post group." });
+    }
+
+    // New message object
+    const newMessage = {
+      userId,
+      message: text,
+      role: "Student",
+      type: "post",
+      post: dbPost._id,
+    };
+
+    // Push new message to the messages array
+    dbGroupChat.messages.push(newMessage);
+    await dbGroupChat.save();
+
     res.status(200).json({
       success: true,
       message: "Post logged successfully",
       data: dbPost,
     });
   } catch (err) {
-    console.error("Error fetching post group by post ID:", err);
-    res.status(500).json({ error: "Failed to fetch post group" });
+    console.error("Error :", err);
+    res.status(500).json({ error: err.message });
   }
 }
