@@ -35,12 +35,11 @@ const messageSchema = new mongoose.Schema(
   { _id: false }
 );
 
-// GroupChat schema
 const groupChatSchema = new mongoose.Schema(
   {
     postGroup: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "PostGroup", // Assuming you have a separate PostGroup model
+      ref: "PostGroup",
       required: true,
     },
     name: {
