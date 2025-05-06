@@ -76,7 +76,10 @@ class AlertsScreen extends StatelessWidget {
                                 shape: BoxShape.circle,
                                 color: getAlertColor(alert.type),
                               ),
-                              child: Icon(Iconsax.message_notif),
+                              child: Icon(
+                                Iconsax.message_notif,
+                                color: TColors.white,
+                              ),
                             ),
                             Expanded(
                               child: Column(

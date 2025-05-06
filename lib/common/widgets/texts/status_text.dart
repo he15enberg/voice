@@ -14,7 +14,12 @@ class TStatusText extends StatelessWidget {
         color: getStatusColor(status),
         borderRadius: BorderRadius.circular(5),
       ),
-      child: Text(status, style: Theme.of(context).textTheme.bodyLarge),
+      child: Text(
+        status,
+        style: Theme.of(
+          context,
+        ).textTheme.bodyLarge!.copyWith(color: TColors.white),
+      ),
     );
   }
 }

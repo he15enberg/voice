@@ -7,6 +7,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:voice/common/widgets/appbar/chat_app_bar.dart';
 import 'package:voice/common/widgets/chips/vote_chip.dart';
 import 'package:voice/common/widgets/icons/user_logo_icon.dart';
+import 'package:voice/common/widgets/shimmers/chat_shimmer.dart';
 import 'package:voice/common/widgets/texts/status_text.dart';
 import 'package:voice/features/app/controllers/chat_controller.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
@@ -56,23 +57,7 @@ class _ChatPageState extends State<ChatPage> {
           Expanded(
             child: Obx(() {
               if (chatController.loading.value) {
-                return Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: CircularProgressIndicator(color: primaryColor),
-                      ),
-                      const SizedBox(width: 10),
-                      Text(
-                        "Fetching chats",
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                    ],
-                  ),
-                );
+                return TChatShimmer();
               }
 
               return Chat(
@@ -214,7 +199,9 @@ Widget customMessageBuilder(
       children: [
         Text(
           "Voice Message",
-          style: Theme.of(Get.context!).textTheme.titleMedium!,
+          style: Theme.of(
+            Get.context!,
+          ).textTheme.titleMedium!.copyWith(color: TColors.white),
         ),
         const SizedBox(height: 5),
 
@@ -227,25 +214,33 @@ Widget customMessageBuilder(
             height: THelperFunctions.screenHeight() * 0.3,
             errorBuilder: (context, error, stackTrace) {
               return Container(
-                color:
-                    THelperFunctions.isDarkMode(context)
-                        ? TColors.white.withOpacity(0.1)
-                        : TColors.black.withOpacity(0.1),
+                // color:
+                //     THelperFunctions.isDarkMode(context)
+                //         ? TColors.white.withOpacity(0.1)
+                //         : TColors.black.withOpacity(0.1),
                 height: THelperFunctions.screenHeight() * 0.3,
                 width: double.infinity,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Iconsax.warning_2, size: 35),
+                    const Icon(
+                      Iconsax.warning_2,
+                      size: 35,
+                      color: TColors.white,
+                    ),
                     const SizedBox(height: 5),
                     Text(
                       "Image not found.",
-                      style: Theme.of(context).textTheme.titleMedium,
+                      style: Theme.of(
+                        context,
+                      ).textTheme.titleMedium!.copyWith(color: TColors.white),
                     ),
                     const SizedBox(height: 5),
                     Text(
                       "Error while loading image data.",
-                      style: Theme.of(context).textTheme.bodySmall,
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        color: TColors.white.withOpacity(0.5),
+                      ),
                       textAlign: TextAlign.center,
                     ),
                   ],
@@ -260,26 +255,36 @@ Widget customMessageBuilder(
           message.metadata?['title'] ?? '',
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: Theme.of(Get.context!).textTheme.titleLarge!,
+          style: Theme.of(
+            Get.context!,
+          ).textTheme.titleLarge!.copyWith(color: TColors.white),
         ),
         Text(
           message.metadata?['desc'] ?? '',
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
-          style: Theme.of(Get.context!).textTheme.bodyMedium!,
+          style: Theme.of(
+            Get.context!,
+          ).textTheme.bodyMedium!.copyWith(color: TColors.white),
         ),
         Padding(
           padding: const EdgeInsets.only(top: 5.0),
           child: Row(
             children: [
-              Icon(Iconsax.location, size: 20, color: themeColor),
+              Icon(
+                Iconsax.location,
+                size: 20,
+                color: TColors.white.withOpacity(0.5),
+              ),
               const SizedBox(width: 5),
               Expanded(
                 child: Text(
                   message.metadata?['location'] ?? '',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(Get.context!).textTheme.bodySmall!,
+                  style: Theme.of(Get.context!).textTheme.bodySmall!.copyWith(
+                    color: TColors.white.withOpacity(0.5),
+                  ),
                 ),
               ),
             ],
@@ -291,13 +296,15 @@ Widget customMessageBuilder(
           padding: const EdgeInsets.symmetric(vertical: 2.5, horizontal: 5),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
-            border: Border.all(color: themeColor),
+            border: Border.all(color: TColors.white.withOpacity(0.5)),
           ),
           child: Text(
             message.metadata?['domain'] ?? '',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(Get.context!).textTheme.labelMedium!,
+            style: Theme.of(Get.context!).textTheme.labelMedium!.copyWith(
+              color: TColors.white.withOpacity(0.5),
+            ),
           ),
         ),
         Padding(
@@ -329,7 +336,9 @@ Widget customMessageBuilder(
         Divider(color: primaryColor.withOpacity(0.25)),
         Text(
           message.metadata?['text'] ?? '',
-          style: Theme.of(Get.context!).textTheme.titleMedium!,
+          style: Theme.of(
+            Get.context!,
+          ).textTheme.titleMedium!.copyWith(color: TColors.white),
         ),
       ],
     ),

@@ -145,11 +145,16 @@ class TPostCard extends StatelessWidget {
                         spacing: 5,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Iconsax.category, size: 17.5),
+                          Icon(
+                            Iconsax.category,
+                            size: 17.5,
+                            color: TColors.white,
+                          ),
 
                           Text(
                             post.domain,
-                            style: Theme.of(context).textTheme.bodyLarge,
+                            style: Theme.of(context).textTheme.bodyLarge!
+                                .copyWith(color: TColors.white),
                           ),
                         ],
                       ),
