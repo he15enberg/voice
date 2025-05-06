@@ -173,16 +173,16 @@ class ProfileScreen extends StatelessWidget {
                     return TPostsShimmer();
                   }
 
-                  if (postController.posts.isEmpty) {
+                  if (postController.userPosts.isEmpty) {
                     return Center(child: TEmptyDataLoader());
                   }
                   return ListView.builder(
                     padding: EdgeInsets.only(bottom: 20),
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: postController.posts.length,
+                    itemCount: postController.userPosts.length,
                     itemBuilder: (_, index) {
-                      final post = postController.posts[index];
+                      final post = postController.userPosts[index];
                       return TPostCard(
                         post: post,
                         upvotePost: () {

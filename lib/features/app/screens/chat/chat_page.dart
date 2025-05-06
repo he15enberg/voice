@@ -10,25 +10,37 @@ import 'package:voice/common/widgets/icons/user_logo_icon.dart';
 import 'package:voice/common/widgets/texts/status_text.dart';
 import 'package:voice/features/app/controllers/chat_controller.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
-import 'package:get/get.dart';
 
 import 'package:voice/features/app/models/group_chat_model.dart';
 import 'package:voice/utils/constants/colors.dart';
 import 'package:voice/utils/helpers/helper_functions.dart';
 
-class ChatPage extends StatelessWidget {
+class ChatPage extends StatefulWidget {
   final GroupChatModel groupChat;
 
-  ChatPage({Key? key, required this.groupChat}) : super(key: key) {
-    // Load posts when widget is initialized, but after the current build frame
+  const ChatPage({Key? key, required this.groupChat}) : super(key: key);
+
+  @override
+  State<ChatPage> createState() => _ChatPageState();
+}
+
+class _ChatPageState extends State<ChatPage> {
+  // Initialize controller once in initState
+  late final ChatController chatController;
+
+  @override
+  void initState() {
+    super.initState();
+    // Get the instance of controller instead of creating a new one
+    chatController = Get.find<ChatController>();
+    // Fetch chat data after widget is initialized
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ChatController.instance.fetchGroupChatById(groupChat.id);
+      chatController.fetchGroupChatById(widget.groupChat.id);
     });
   }
+
   @override
   Widget build(BuildContext context) {
-    final ChatController chatController = Get.put(ChatController());
-
     final isDark = THelperFunctions.isDarkMode(context);
     final themeColor =
         isDark
@@ -36,10 +48,11 @@ class ChatPage extends StatelessWidget {
             : TColors.black.withOpacity(0.5);
     final reversePrimaryColor = isDark ? TColors.black : TColors.white;
     final primaryColor = !isDark ? TColors.black : TColors.white;
+
     return Scaffold(
       body: Column(
         children: [
-          TChatAppBar(themeColor: themeColor, groupChat: groupChat),
+          TChatAppBar(themeColor: themeColor, groupChat: widget.groupChat),
           Expanded(
             child: Obx(() {
               if (chatController.loading.value) {
@@ -52,7 +65,7 @@ class ChatPage extends StatelessWidget {
                         width: 20,
                         child: CircularProgressIndicator(color: primaryColor),
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Text(
                         "Fetching chats",
                         style: Theme.of(context).textTheme.titleMedium,
@@ -64,19 +77,15 @@ class ChatPage extends StatelessWidget {
 
               return Chat(
                 messages: chatController.messages.toList(),
-
                 onSendPressed: chatController.handleSendPressed,
                 showUserAvatars: true,
                 showUserNames: true,
                 user: chatController.user,
-
                 theme: DefaultChatTheme(
                   backgroundColor: reversePrimaryColor,
                   primaryColor: primaryColor,
                   secondaryColor: isDark ? TColors.darkerGrey : TColors.grey,
-
                   userAvatarNameColors: [primaryColor],
-
                   sentMessageBodyTextStyle: Theme.of(
                     context,
                   ).textTheme.bodyLarge!.copyWith(color: reversePrimaryColor),
@@ -92,29 +101,49 @@ class ChatPage extends StatelessWidget {
                   dateDividerTextStyle: Theme.of(
                     context,
                   ).textTheme.bodyLarge!.copyWith(color: primaryColor),
-
-                  // Message spacing
                   messageBorderRadius: 15,
                   messageInsetsHorizontal: 15,
                   messageInsetsVertical: 10,
                   inputContainerDecoration: BoxDecoration(
                     color: isDark ? TColors.grey : TColors.black,
-                    borderRadius: BorderRadius.vertical(
+                    borderRadius: const BorderRadius.vertical(
                       top: Radius.circular(10),
                     ),
                   ),
                   inputTextCursorColor: Colors.black,
-                  inputPadding: EdgeInsets.symmetric(vertical: 5),
+                  inputPadding: const EdgeInsets.symmetric(vertical: 5),
                   inputMargin: EdgeInsets.zero,
                   inputTextColor: reversePrimaryColor,
                   inputTextStyle: Theme.of(context).textTheme.bodyLarge!,
-                  sendButtonIcon: Container(
-                    padding: EdgeInsets.all(7.5),
-                    decoration: BoxDecoration(
-                      color: TColors.primary,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(Iconsax.send_2, color: Colors.white),
+                  sendButtonIcon: Obx(
+                    () =>
+                        chatController.isSending.value
+                            ? Container(
+                              padding: const EdgeInsets.all(7.5),
+                              decoration: const BoxDecoration(
+                                color: TColors.primary,
+                                shape: BoxShape.circle,
+                              ),
+                              child: const SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                  strokeWidth: 2,
+                                ),
+                              ),
+                            )
+                            : Container(
+                              padding: const EdgeInsets.all(7.5),
+                              decoration: const BoxDecoration(
+                                color: TColors.primary,
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(
+                                Iconsax.send_2,
+                                color: Colors.white,
+                              ),
+                            ),
                   ),
                   inputTextDecoration: InputDecoration(
                     hintText: "Chat your voice",
@@ -138,8 +167,8 @@ class ChatPage extends StatelessWidget {
                 hideBackgroundOnEmojiMessages: true,
                 customMessageBuilder: customMessageBuilder,
                 avatarBuilder: (author) {
-                  return Padding(
-                    padding: const EdgeInsets.only(right: 5.0),
+                  return const Padding(
+                    padding: EdgeInsets.only(right: 5.0),
                     child: TUserLogoIcon(),
                   );
                 },
@@ -179,7 +208,7 @@ Widget customMessageBuilder(
   // Build a custom widget for post messages
   return Container(
     color: TColors.primary.withOpacity(0.8),
-    padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
+    padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -187,7 +216,7 @@ Widget customMessageBuilder(
           "Voice Message",
           style: Theme.of(Get.context!).textTheme.titleMedium!,
         ),
-        SizedBox(height: 5),
+        const SizedBox(height: 5),
 
         ClipRRect(
           borderRadius: BorderRadius.circular(10.0),
@@ -207,7 +236,7 @@ Widget customMessageBuilder(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Iconsax.warning_2, size: 35),
+                    const Icon(Iconsax.warning_2, size: 35),
                     const SizedBox(height: 5),
                     Text(
                       "Image not found.",
@@ -225,7 +254,7 @@ Widget customMessageBuilder(
             },
           ),
         ),
-        SizedBox(height: 5),
+        const SizedBox(height: 5),
 
         Text(
           message.metadata?['title'] ?? '',
@@ -244,7 +273,7 @@ Widget customMessageBuilder(
           child: Row(
             children: [
               Icon(Iconsax.location, size: 20, color: themeColor),
-              SizedBox(width: 5),
+              const SizedBox(width: 5),
               Expanded(
                 child: Text(
                   message.metadata?['location'] ?? '',
@@ -256,10 +285,10 @@ Widget customMessageBuilder(
             ],
           ),
         ),
-        SizedBox(height: 5),
+        const SizedBox(height: 5),
 
         Container(
-          padding: EdgeInsets.symmetric(vertical: 2.5, horizontal: 5),
+          padding: const EdgeInsets.symmetric(vertical: 2.5, horizontal: 5),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
             border: Border.all(color: themeColor),
@@ -285,7 +314,7 @@ Widget customMessageBuilder(
                     isVoted: false,
                     voteCount: message.metadata?['upvotes'] ?? '',
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   TVoteChip(
                     onTap: () {},
                     action: "downvote",

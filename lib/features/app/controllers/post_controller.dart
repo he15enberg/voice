@@ -67,9 +67,8 @@ class PostController extends GetxController {
   Future<void> fetchUserPosts() async {
     try {
       loading.value = true;
-      final userId = userController.user.value.id;
 
-      final posts = await postRepository.fetchUserPosts(userId);
+      final posts = await postRepository.fetchUserPosts();
       userPosts.value = posts;
     } catch (e) {
       userPosts.value = [];
@@ -196,6 +195,8 @@ class PostController extends GetxController {
     } finally {
       loading.value = false;
       fetchAllPosts();
+      fetchUserPosts();
+      resetForm();
     }
   }
 

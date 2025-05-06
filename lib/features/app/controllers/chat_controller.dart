@@ -17,9 +17,11 @@ import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:voice/common/widgets/loaders/loaders.dart';
 import 'package:voice/data/repositories/chat_repository.dart';
 import 'package:voice/features/app/controllers/user_controller.dart';
 import 'package:voice/features/app/models/group_chat_model.dart';
+import 'package:voice/utils/device/device_utility.dart';
 import 'package:voice/utils/logging/logger.dart';
 
 class ChatController extends GetxController {
@@ -35,6 +37,7 @@ class ChatController extends GetxController {
   final RxList<GroupChatModel> groupChats = <GroupChatModel>[].obs;
   final Rx<GroupChatModel> groupChat = GroupChatModel.empty().obs;
   final RxList<types.Message> messages = <types.Message>[].obs;
+  final RxBool isSending = false.obs;
   late types.User user;
   @override
   void onInit() async {
@@ -149,22 +152,39 @@ class ChatController extends GetxController {
   }
 
   void handleSendPressed(types.PartialText message) async {
-    final textMessage = types.TextMessage(
-      author: user,
-      createdAt: DateTime.now().millisecondsSinceEpoch,
-      id: const Uuid().v4(),
-      text: message.text,
-    );
-    final userId = userController.user.value.id;
+    TDeviceUtils.hideKeyboard(Get.context!);
 
-    final newMesssage = {
-      "userId": userId,
-      "message": message.text,
-      "role": "Student",
-      "type": "text",
-      "post": null,
-    };
-    await chatRepository.sendMessage(groupChat.value.id, newMesssage);
-    _addMessage(textMessage);
+    isSending.value = true;
+
+    try {
+      final textMessage = types.TextMessage(
+        author: user,
+        createdAt: DateTime.now().millisecondsSinceEpoch,
+        id: const Uuid().v4(),
+        text: message.text,
+      );
+
+      final userId = userController.user.value.id;
+
+      final newMesssage = {
+        "userId": userId,
+        "message": message.text,
+        "role": "Student",
+        "type": "text",
+        "post": null,
+      };
+
+      await chatRepository.sendMessage(groupChat.value.id, newMesssage);
+      _addMessage(textMessage);
+    } catch (e) {
+      print("Error sending message: $e");
+
+      TLoaders.errorSnackBar(
+        title: "Oh Snap!",
+        message: "Something went wrong: $e",
+      );
+    } finally {
+      isSending.value = false;
+    }
   }
 }

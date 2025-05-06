@@ -4,9 +4,8 @@ import 'package:voice/utils/logging/logger.dart';
 
 class THttpHelper {
   static const String _ipv4 = '192.168.251.115';
-  static const String _baseUrl = 'http://$_ipv4:3000/api';
-  // static const String _baseUrl =
-  //     'https://voice-backend-two.vercel.app/api';
+  // static const String _baseUrl = 'http://$_ipv4:3000/api';
+  static const String _baseUrl = 'https://voice-backend-two.vercel.app/api';
 
   // Helper method to make a GET request
   static Future<Map<String, dynamic>> get(String endpoint) async {

@@ -29,6 +29,9 @@ dependencies:
   flutter_chat_ui: ^1.6.15
   file_picker: ^10.1.2
   open_filex: ^4.7.0
+  speech_to_text: ^7.0.0
+  slide_to_act: ^2.0.2
+  avatar_glow: ^3.0.1
 
 dev_dependencies:
   flutter_test:

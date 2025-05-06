@@ -37,13 +37,36 @@ class PostRepository extends GetxController {
     }
   }
 
-  Future<List<PostModel>> fetchUserPosts(userId) async {
+  Future<List<PostModel>> fetchUserPosts() async {
     try {
+      final userId = deviceStorage.read("userId");
+
       final response = await THttpHelper.get("post/$userId");
       final postsData = response["data"] as List<dynamic>;
+      print("${userId} USERID");
 
       final posts = postsData.map((post) => PostModel.fromJson(post)).toList();
       return posts;
+    } on FormatException catch (_) {
+      throw const TFormatException();
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code).message;
+    } catch (e) {
+      TLoggerHelper.error(e.toString());
+      throw "Something went wrong. Please try again";
+    }
+  }
+
+  Future<Map<String, dynamic>> fetchSpeechPostData(String text) async {
+    try {
+      final response = await THttpHelper.post("post/speech-post", {
+        "text": text,
+      });
+      if (response["success"] == true && response["data"] != null) {
+        return response["data"] as Map<String, dynamic>;
+      } else {
+        throw "Input text is inappropriate, irrelevant, or unclear";
+      }
     } on FormatException catch (_) {
       throw const TFormatException();
     } on PlatformException catch (e) {

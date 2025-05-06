@@ -7,17 +7,17 @@ import 'package:voice/utils/helpers/helper_functions.dart';
 
 const List<String> locations = [
   "Anna University Main Building",
-
-  "Department of Electronics & Communication Engineering",
   "Anna University Swimming Pool",
-  "College of Engineering, Guindy",
+  "Anna University Central Library",
+  "Anna University Hostel",
+  "Department of Computer Science & Engineering",
+  "Department of Electronics & Communication Engineering",
   "Department of Civil Engineering",
   "Department of Information Science and Technology",
-  "Anna University Central Library",
   "Department of Industrial Engineering",
+  "Department of Mechanical Engineering",
   "Department of Biotechnology",
   "Department of Nuclear Physics",
-  "Institute for Energy Studies",
 ];
 showMapModal(BuildContext context) {
   final postController = PostController.instance;
