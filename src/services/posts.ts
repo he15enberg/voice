@@ -55,13 +55,16 @@ export async function logPostStatus(
 ): Promise<Post> {
   try {
     const userId = localStorage.getItem("userId");
-    const logData = {
+    const logStatusData = {
       status: data.status,
       text: data.text,
       userId,
     };
 
-    const res = await api.post<PostApiResponse>(`/post/log/${postId}`, logData);
+    const res = await api.post<PostApiResponse>(
+      `/post/log/${postId}`,
+      logStatusData
+    );
     return res.data.data;
   } catch (err: unknown) {
     if (err instanceof Error) {
