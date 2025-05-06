@@ -20,11 +20,18 @@ export default function Page() {
       try {
         const data = await getAllGroupChats(); // calling the API
         setGroupChats(data); // assuming data is an array of posts
-      } catch (error) {
-        customToast({
-          message: "Failed to load group chats",
-          type: "error",
-        });
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          customToast({
+            message: error.message || "Failed to load group chats",
+            type: "error",
+          });
+        } else {
+          customToast({
+            message: "Failed to load group chats",
+            type: "error",
+          });
+        }
       } finally {
         setLoading(false);
       }

@@ -22,7 +22,18 @@ export default function Page() {
       try {
         const data = await getAllPosts(); // calling the API
         setPosts(data); // assuming data is an array of posts
-      } catch (error) {
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          customToast({
+            message: error.message || "Failed to load pots",
+            type: "error",
+          });
+        } else {
+          customToast({
+            message: "Failed to load pots",
+            type: "error",
+          });
+        }
       } finally {
         setLoading(false);
       }
@@ -46,11 +57,18 @@ export default function Page() {
       customToast({
         message: "Post Logged successfully.",
       });
-    } catch (error) {
-      customToast({
-        message: "Error logging post.",
-        type: "error",
-      });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        customToast({
+          message: error.message || "Error Logging Post.",
+          type: "error",
+        });
+      } else {
+        customToast({
+          message: "Error Logging Post.",
+          type: "error",
+        });
+      }
     } finally {
       setLoading(false);
     }
