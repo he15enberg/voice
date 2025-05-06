@@ -7,7 +7,6 @@ import { getAllPosts, logPostStatus } from "@/services/posts";
 import { Post } from "@/types/post";
 import { Sheet } from "@/components/ui/sheet";
 import { PostCommentsSheet } from "./post-comments";
-import { Skeleton } from "@/components/ui/skeleton";
 import { PostSkeleton } from "@/components/skeleton/post-skeleton";
 import EmptyLoader from "@/components/empty-loader";
 import { customToast } from "@/components/toast/custom-toast";
@@ -17,8 +16,6 @@ export default function Page() {
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
-  const [postLoading, setPostLoading] = useState(true);
-  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -26,7 +23,6 @@ export default function Page() {
         const data = await getAllPosts(); // calling the API
         setPosts(data); // assuming data is an array of posts
       } catch (err: any) {
-        setError(err.message || "Failed to load posts.");
       } finally {
         setLoading(false);
       }
@@ -55,7 +51,6 @@ export default function Page() {
         message: "Error logging post.",
         type: "error",
       });
-      setError(err.message || "Failed to load posts.");
     } finally {
       setLoading(false);
     }
@@ -65,11 +60,6 @@ export default function Page() {
     setDialogOpen(true);
   };
   const [commentsOpen, setCommentsOpen] = useState(false);
-
-  const handleCommentsClicked = (post: Post) => {
-    setSelectedPost(post);
-    setCommentsOpen(true);
-  };
 
   return (
     <div className="relative">
@@ -84,7 +74,11 @@ export default function Page() {
       ) : (
         <div className="p-4 gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 w-full">
           {posts.map((post) => (
-            <Sheet open={commentsOpen} onOpenChange={setCommentsOpen}>
+            <Sheet
+              key={post._id}
+              open={commentsOpen}
+              onOpenChange={setCommentsOpen}
+            >
               <div key={post._id} className="cursor-pointer">
                 <PostCard
                   post={post}

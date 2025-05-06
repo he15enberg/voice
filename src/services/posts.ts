@@ -1,5 +1,4 @@
 // services/posts.ts
-import { log } from "console";
 import api from "../lib/axios";
 import { Post } from "../types/post";
 

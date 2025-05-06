@@ -3,17 +3,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
   SendIcon,
-  PlusIcon,
-  X,
   AudioLines,
   Users,
   SquaresExclude,
   ShieldUser,
   Loader2,
 } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import {
@@ -23,10 +19,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { MessageModel, GroupChatModel, User } from "@/types/group-chat";
-import { Post } from "@/types/post";
 import PostCard from "../posts/post-card";
 import { addMessage } from "@/services/chat";
-import { getUser } from "@/services/auth";
 
 interface ChatDialogProps {
   isOpen: boolean;

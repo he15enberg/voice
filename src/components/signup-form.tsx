@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -12,13 +13,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
 import { useRouter } from "next/navigation";
 import { signUp } from "@/services/auth";
 import { customToast } from "./toast/custom-toast";
@@ -58,9 +53,9 @@ export function SignUpForm({
       customToast({
         message: "Account created successfully. Please login.",
       });
-    } catch (err: any) {
+    } catch (e) {
       customToast({
-        message: "Failed to create account.",
+        message: `Failed to create account.${e}`,
         type: "error",
       });
     } finally {
@@ -146,9 +141,9 @@ export function SignUpForm({
             </div>
             <div className="mt-4 text-center text-sm">
               Already have an account?{" "}
-              <a href="/login" className="underline underline-offset-4">
+              <Link href="/login" className="underline underline-offset-4">
                 Login
-              </a>
+              </Link>
             </div>
           </form>
         </CardContent>

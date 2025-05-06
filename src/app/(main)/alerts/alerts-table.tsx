@@ -50,8 +50,6 @@ import {
   MoreVerticalIcon,
   RefreshCwIcon,
 } from "lucide-react";
-import { toast } from "sonner";
-import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -94,7 +92,6 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AddAlertDialogInTable } from "./alert-dialog";
 import { Alert } from "@/types/alerts";
-import { deleteAlert } from "@/services/alerts";
 
 // Format date and time from ISO string
 function formatDateTime(dateString: string): string {

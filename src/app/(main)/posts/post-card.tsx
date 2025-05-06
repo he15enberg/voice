@@ -6,17 +6,10 @@ import {
   SquaresExclude,
   ThumbsUp,
   ThumbsDown,
-  LucideIcon,
-  InfoIcon,
-  AlertTriangleIcon,
-  AlertCircleIcon,
-  CheckCircleIcon,
 } from "lucide-react";
-import Image from "next/image";
 import { InteractionCard } from "@/components/interaction-card";
 import { Post } from "@/types/post";
-import { Sheet, SheetTrigger } from "@/components/ui/sheet";
-import { SelectItem } from "@/components/ui/select";
+import { SheetTrigger } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
 import { getStatusIcon } from "@/lib/helper";
 import PostImage from "@/components/post-image";

@@ -9,7 +9,6 @@ import {
   UserCircleIcon,
 } from "lucide-react";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,7 +26,7 @@ import {
 } from "@/components/ui/sidebar";
 import React, { useState, useEffect } from "react";
 import { User } from "@/types/user";
-import { getUser, signOut } from "@/services/auth";
+import { getUser } from "@/services/auth";
 import { Skeleton } from "./ui/skeleton";
 import { useRouter } from "next/navigation";
 
@@ -44,7 +43,6 @@ export function NavUser() {
     updatedAt: "",
   });
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
   const router = useRouter();
 
   const handleSignOut = async () => {
@@ -63,7 +61,6 @@ export function NavUser() {
         setUser(data); // assuming data is an array of posts
       } catch (err: any) {
         console.log(err);
-        setError(err.message || "Failed to load user.");
       } finally {
         setLoading(false);
       }

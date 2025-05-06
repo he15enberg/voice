@@ -2,26 +2,17 @@
 
 import * as React from "react";
 import {
-  ArrowUpCircleIcon,
   AudioLines,
-  BarChartIcon,
-  BellRing,
   CameraIcon,
   ChartSpline,
   ClipboardListIcon,
   DatabaseIcon,
   FileCodeIcon,
-  FileIcon,
   FileTextIcon,
-  FolderIcon,
   HelpCircleIcon,
-  LayoutDashboardIcon,
-  ListIcon,
   LucideIcon,
-  MessageSquareText,
   SearchIcon,
   SettingsIcon,
-  UsersIcon,
 } from "lucide-react";
 
 import { NavDocuments } from "@/components/nav-documents";

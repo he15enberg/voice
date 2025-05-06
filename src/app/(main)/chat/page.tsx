@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Skeleton } from "@/components/ui/skeleton";
 import EmptyLoader from "@/components/empty-loader";
 import { customToast } from "@/components/toast/custom-toast";
 import { getAllGroupChats } from "@/services/chat";
@@ -15,9 +14,7 @@ export default function Page() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [groupChats, setGroupChats] = useState<GroupChatModel[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
   const [selectedChat, setSelectedChat] = useState<GroupChatModel | null>(null);
-  const { theme } = useTheme();
 
   useEffect(() => {
     const fetchGroupChats = async () => {
@@ -25,7 +22,6 @@ export default function Page() {
         const data = await getAllGroupChats(); // calling the API
         setGroupChats(data); // assuming data is an array of posts
       } catch (err: any) {
-        setError(err.message || "Failed to load posts.");
         customToast({
           message: "Failed to load group chats",
           type: "error",

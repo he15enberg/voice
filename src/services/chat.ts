@@ -1,4 +1,3 @@
-import { log } from "console";
 import api from "../lib/axios";
 import { GroupChatModel } from "@/types/group-chat";
 

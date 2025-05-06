@@ -26,10 +26,6 @@ import { Alert } from "@/types/alerts";
 
 // Define the alert type interface
 
-interface AddAlertDialogProps {
-  onAddAlert: (alert: Omit<Alert, "_id" | "createdAt">) => void;
-}
-
 export // Add Alert Dialog (integrated into AlertsTable)
 function AddAlertDialogInTable({
   onAddAlert,

@@ -4,14 +4,11 @@ import { AlertsTable } from "./alerts-table";
 import { addAlert, deleteAlert, getAllAlerts } from "@/services/alerts";
 import { Alert } from "@/types/alerts";
 import { AlertSkeleton } from "@/components/skeleton/alert-skeleton";
-import { toast } from "sonner";
 import { customToast } from "@/components/toast/custom-toast";
-import { title } from "process";
 
 export default function Page() {
   const [alerts, setAlerts] = useState<Alert[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
   useEffect(() => {
     const fetchAlerts = async () => {
       try {
@@ -19,7 +16,6 @@ export default function Page() {
         setAlerts(data); // assuming data is an array of posts
       } catch (err: any) {
         console.log(err);
-        setError(err.message || "Failed to load posts.");
       } finally {
         setLoading(false);
       }

@@ -42,9 +42,9 @@ export function SignInForm({
       customToast({
         message: "User logged in successfully.",
       });
-    } catch (err: any) {
+    } catch (e) {
       customToast({
-        message: "Failed to login User.",
+        message: `Failed to login User.${e}`,
         type: "error",
       });
     } finally {
