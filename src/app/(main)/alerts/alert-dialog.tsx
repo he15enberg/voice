@@ -65,7 +65,7 @@ function AddAlertDialogInTable({
       <DialogTrigger asChild>
         <Button variant="outline" size="sm">
           <PlusIcon />
-          <span className="hidden lg:inline">New Alert&apos;</span>
+          <span className="hidden lg:inline">New Alert</span>
         </Button>
       </DialogTrigger>
       <DialogContent>
