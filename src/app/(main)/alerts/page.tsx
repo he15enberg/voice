@@ -16,7 +16,6 @@ export default function Page() {
         const data = await getAllAlerts(); // calling the API
         setAlerts(data); // assuming data is an array of posts
       } catch (error: unknown) {
-        // eslint-disable-next-line no-console
         console.log(
           error instanceof Error ? error.message : "Unknown error occurred"
         );

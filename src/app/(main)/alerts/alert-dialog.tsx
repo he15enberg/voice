@@ -73,8 +73,8 @@ function AddAlertDialogInTable({
           <DialogHeader>
             <DialogTitle>Add New Alert</DialogTitle>
             <DialogDescription>
-              Create a new alert. Fill in the details and click save when you're
-              done.
+              Create a new alert. Fill in the details and click save when
+              you&apos;re done.
             </DialogDescription>
           </DialogHeader>
 
