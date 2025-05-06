@@ -122,11 +122,17 @@ export const addMessageToGroupChat = async (req, res) => {
         $push: { messages: newMessage },
       },
       { new: true }
-    ).populate({
-      path: "messages.post",
-      model: "Post", // Ensure this matches your Post model name
-    });
-
+    )
+      .populate({
+        path: "postGroup",
+        populate: {
+          path: "posts",
+          model: "Post", // this line is optional if the model name is already correct in schema
+        },
+      })
+      .populate("members", "name")
+      .populate("messages.userId", "name")
+      .populate("messages.post");
     if (!updatedGroupChat) {
       return res.status(404).json({
         success: false,

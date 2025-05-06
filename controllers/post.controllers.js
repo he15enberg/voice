@@ -384,3 +384,33 @@ export async function logPostStatus(req, res) {
     res.status(500).json({ error: err.message });
   }
 }
+export async function getPostsStatusCount(req, res) {
+  try {
+    const [total, raised, processing, approved, rejected] = await Promise.all([
+      Post.countDocuments({}), // Adding explicit empty filter
+      Post.countDocuments({ status: "Raised" }),
+      Post.countDocuments({ status: "Processing" }),
+      Post.countDocuments({ status: "Approved" }),
+      Post.countDocuments({ status: "Rejected" }),
+    ]);
+
+    res.status(200).json({
+      success: true,
+      message: "Post counts fetched successfully",
+      data: {
+        total,
+        raised,
+        processing,
+        approved,
+        rejected,
+      },
+    });
+  } catch (err) {
+    console.error("Error fetching post count:", err);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch post count",
+      error: err.message,
+    });
+  }
+}
