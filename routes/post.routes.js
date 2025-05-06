@@ -5,6 +5,7 @@ import {
   getAllPosts,
   getPostsStatusCount,
   getSimilarPosts,
+  getSpeechPostData,
   getUserPosts,
   logPostStatus,
   votePost,
@@ -15,6 +16,7 @@ const postRouter = Router();
 // Define specific routes first
 postRouter.get("/", getAllPosts);
 postRouter.post("/create", createPost);
+postRouter.post("/speech-post", getSpeechPostData);
 postRouter.post("/comment/:postId", commentOnPost);
 postRouter.post("/vote/:postId", votePost);
 postRouter.post("/log/:postId", logPostStatus);

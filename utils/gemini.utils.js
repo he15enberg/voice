@@ -215,3 +215,74 @@ ${similarQueries.map((q, idx) => `${idx + 1}. ${q}`).join("\n")}
     return "Group Chat";
   }
 }
+
+export async function extractIssueDetails(inputText) {
+  const locations = [
+    "Anna University Main Building",
+    "Anna University Swimming Pool",
+    "Anna University Central Library",
+    "Anna University Hostel",
+    "Department of Computer Science & Engineering",
+    "Department of Electronics & Communication Engineering",
+    "Department of Civil Engineering",
+    "Department of Information Science and Technology",
+    "Department of Industrial Engineering",
+    "Department of Mechanical Engineering",
+    "Department of Biotechnology",
+    "Department of Nuclear Physics",
+  ];
+
+  const prompt = `
+You are a helpful assistant in an issue reporting system for Anna University. Extract the issue's title, detailed description, and location from the given text, ONLY if the issue is serious and relevant to real-world campus services like hostel, sanitation, safety, transport, infrastructure, etc.
+
+Rules:
+- Reject input if it's inappropriate, sarcastic, a joke, off-topic (like movies or games), gibberish, or cannot be understood clearly.
+- Location must strictly match one of the following:
+
+${locations.map((loc) => `- ${loc}`).join("\n")}
+
+Input Text:
+"""
+${inputText}
+"""
+
+Output JSON format:
+{
+  "success": true or false,
+  "data": {
+    "title": "short meaningful title of the issue",
+    "desc": "clear and complete description",
+    "location": "exact match from the approved list"
+  }
+}
+
+If the text is inappropriate or irrelevant, set "success" to false and do not include the "data" field.
+`;
+
+  const response = await ai.models.generateContent({
+    model: "gemini-2.0-flash", // or any valid model you're using
+    contents: prompt,
+    config: {
+      responseMimeType: "application/json",
+      responseSchema: {
+        type: "object",
+        properties: {
+          success: { type: "boolean" },
+          data: {
+            type: "object",
+            properties: {
+              title: { type: "string" },
+              desc: { type: "string" },
+              location: { type: "string", enum: locations },
+            },
+            required: ["title", "desc", "location"],
+          },
+        },
+        required: ["success"],
+      },
+    },
+  });
+
+  const result = JSON.parse(response.text);
+  return result;
+}

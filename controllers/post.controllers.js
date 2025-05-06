@@ -3,6 +3,7 @@ import User from "../models/user.model.js";
 import Alert from "../models/alerts.model.js";
 import mongoose from "mongoose";
 import {
+  extractIssueDetails,
   generateGroupChatName,
   generateSimilarIssueQueries,
   getDomainOfIssue,
@@ -307,6 +308,7 @@ export async function getSimilarPosts(req, res) {
     res.status(500).json({ error: "Failed to fetch post group" });
   }
 }
+
 export async function logPostStatus(req, res) {
   const { postId } = req.params;
   const { userId, status, text } = req.body;
@@ -384,6 +386,7 @@ export async function logPostStatus(req, res) {
     res.status(500).json({ error: err.message });
   }
 }
+
 export async function getPostsStatusCount(req, res) {
   try {
     const [total, raised, processing, approved, rejected] = await Promise.all([
@@ -410,6 +413,40 @@ export async function getPostsStatusCount(req, res) {
     res.status(500).json({
       success: false,
       message: "Failed to fetch post count",
+      error: err.message,
+    });
+  }
+}
+export async function getSpeechPostData(req, res) {
+  try {
+    const { text } = req.body;
+
+    if (!text || typeof text !== "string") {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid input: text is required and must be a string",
+      });
+    }
+
+    const result = await extractIssueDetails(text);
+
+    if (!result.success) {
+      return res.status(400).json({
+        success: false,
+        message: "Input text is inappropriate, irrelevant, or unclear",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Issue extracted successfully",
+      data: result.data, // contains title, desc, location
+    });
+  } catch (err) {
+    console.error("Error extracting issue details:", err);
+    res.status(500).json({
+      success: false,
+      message: "Server error while extracting issue details",
       error: err.message,
     });
   }
