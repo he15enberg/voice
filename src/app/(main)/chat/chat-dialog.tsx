@@ -18,9 +18,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { MessageModel, GroupChatModel, User } from "@/types/group-chat";
+import { MessageModel, GroupChatModel } from "@/types/group-chat";
 import PostCard from "../posts/post-card";
 import { addMessage } from "@/services/chat";
+import { Post } from "@/types/post";
 
 interface ChatDialogProps {
   isOpen: boolean;
@@ -74,7 +75,7 @@ export function ChatDialog({ isOpen, onClose, groupChat }: ChatDialogProps) {
   }, [groupChat]);
 
   // Helper function to ensure post has required structure
-  const ensureValidPostStructure = (post: any) => {
+  const ensureValidPostStructure = (post: Post) => {
     // Ensure post has expected properties or provide defaults
     return {
       ...post,
@@ -215,7 +216,7 @@ export function ChatDialog({ isOpen, onClose, groupChat }: ChatDialogProps) {
               <ChatMessage
                 key={index}
                 message={message}
-                currentUserId={currentUser?.id!}
+                currentUserId={currentUser?.id || "id"}
               />
             ))
           )}

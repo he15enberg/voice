@@ -17,9 +17,9 @@ export default function UsersPage() {
       try {
         const data = await getAllUsers(); // calling the API
         setUsers(data); // assuming data is an array of users
-      } catch (err: any) {
-        console.log(err);
-        setError(err.message || "Failed to load users.");
+      } catch (error) {
+        console.log(error);
+        setError("Failed to load users.");
       } finally {
         setLoading(false);
       }
@@ -35,8 +35,8 @@ export default function UsersPage() {
       await deleteUser(userId);
       setUsers((prevUsers) => prevUsers.filter((user) => user._id !== userId));
       customToast({ message: "User deleted successfully" });
-    } catch (err: any) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
       customToast({ message: "Failed to delete user.", type: "error" });
     }
   };

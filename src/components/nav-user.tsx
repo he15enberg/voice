@@ -59,8 +59,8 @@ export function NavUser() {
       try {
         const data = await getUser(); // calling the API
         setUser(data); // assuming data is an array of posts
-      } catch (err: any) {
-        console.log(err);
+      } catch (error) {
+        console.log(error);
       } finally {
         setLoading(false);
       }

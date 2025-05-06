@@ -6,7 +6,6 @@ import { customToast } from "@/components/toast/custom-toast";
 import { getAllGroupChats } from "@/services/chat";
 import { GroupChatModel } from "@/types/group-chat";
 import { AudioLines, Users, SquaresExclude } from "lucide-react";
-import { useTheme } from "next-themes"; // Import useTheme for theme detection
 import { ChatDialog } from "./chat-dialog";
 import { GroupChatSkeleton } from "@/components/skeleton/group-chat-skeleton";
 
@@ -21,7 +20,7 @@ export default function Page() {
       try {
         const data = await getAllGroupChats(); // calling the API
         setGroupChats(data); // assuming data is an array of posts
-      } catch (err: any) {
+      } catch (error) {
         customToast({
           message: "Failed to load group chats",
           type: "error",

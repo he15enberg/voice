@@ -22,8 +22,11 @@ export async function signIn(data: {
   try {
     const res = await api.post<AuthApiResponse>(`/auth/signin`, data);
     return res.data.data;
-  } catch (err: any) {
-    throw new Error(err.message || "Failed to Signin user.");
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(error.message || "Failed to Signin user.");
+    }
+    throw new Error("Failed to Signin user.");
   }
 }
 
@@ -37,8 +40,11 @@ export async function signUp(data: {
   try {
     const res = await api.post<AuthApiResponse>(`/auth/signup`, data);
     return res.data.data;
-  } catch (err: any) {
-    throw new Error(err.message || "Failed to SignUp user.");
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(error.message || "Failed to SignUp user.");
+    }
+    throw new Error("Failed to SignUp user.");
   }
 }
 
@@ -49,8 +55,11 @@ export async function getUser(): Promise<User> {
     const res = await api.get<AuthApiResponse>(`/auth/${userId}`);
     console.log(res.data.data);
     return res.data.data;
-  } catch (err: any) {
-    throw new Error(err.message || "Failed to fetch user data.");
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(error.message || "Failed to fetch user data.");
+    }
+    throw new Error("Failed to fetch user data.");
   }
 }
 
@@ -59,8 +68,11 @@ export async function deleteUser(userId: string): Promise<User> {
     const res = await api.delete<AuthApiResponse>(`/auth/${userId}`);
     console.log(res.data.data);
     return res.data.data;
-  } catch (err: any) {
-    throw new Error(err.message || "Failed to delete user data.");
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(error.message || "Failed to delete user data.");
+    }
+    throw new Error("Failed to delete user data.");
   }
 }
 
@@ -69,10 +81,14 @@ export async function getAllUsers(): Promise<User[]> {
     const res = await api.get<UsersApiResponse>(`/auth/`);
     console.log(res.data.data);
     return res.data.data;
-  } catch (err: any) {
-    throw new Error(err.message || "Failed to fetch user data.");
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(error.message || "Failed to fetch user data.");
+    }
+    throw new Error("Failed to fetch user data.");
   }
 }
+
 export async function signOut() {
   try {
     localStorage.removeItem("isAuthenticated");

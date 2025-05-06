@@ -17,16 +17,16 @@ export async function getAllAlerts(): Promise<Alert[]> {
   try {
     const res = await api.get<AlertsApiResponse>("/alert");
     return res.data.data;
-  } catch (err: any) {
-    throw new Error(err.message || "Failed to fetch alerts");
+  } catch (error) {
+    throw new Error("Failed to fetch alerts");
   }
 }
 export async function deleteAlert(alertId: string): Promise<Alert[]> {
   try {
     const res = await api.delete<AlertsApiResponse>(`/alert/${alertId}`);
     return res.data.data;
-  } catch (err: any) {
-    throw new Error(err.message || "Failed to delete alerts");
+  } catch (error) {
+    throw new Error("Failed to delete alerts");
   }
 }
 export async function addAlert(alert: {
@@ -37,7 +37,7 @@ export async function addAlert(alert: {
   try {
     const res = await api.post<AlertApiResponse>(`/alert/`, alert);
     return res.data.data;
-  } catch (err: any) {
-    throw new Error(err.message || "Failed to add alerts");
+  } catch (error) {
+    throw new Error("Failed to add alerts");
   }
 }

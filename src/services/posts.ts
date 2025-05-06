@@ -29,8 +29,11 @@ export async function getAllPosts(): Promise<Post[]> {
   try {
     const res = await api.get<PostsApiResponse>("/post");
     return res.data.data;
-  } catch (err: any) {
-    throw new Error(err.message || "Failed to fetch posts");
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      throw new Error(err.message || "Failed to fetch posts");
+    }
+    throw new Error("Failed to fetch posts");
   }
 }
 
@@ -38,8 +41,11 @@ export async function getStatusCount(): Promise<StatusCount> {
   try {
     const res = await api.get<DasboardApiResponse>("/post/status-count");
     return res.data.data;
-  } catch (err: any) {
-    throw new Error(err.message || "Failed to fetch posts");
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      throw new Error(err.message || "Failed to fetch posts");
+    }
+    throw new Error("Failed to fetch posts");
   }
 }
 
@@ -56,9 +62,11 @@ export async function logPostStatus(
     };
 
     const res = await api.post<PostApiResponse>(`/post/log/${postId}`, logData);
-
     return res.data.data;
-  } catch (err: any) {
-    throw new Error(err.message || "Failed to log post");
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      throw new Error(err.message || "Failed to log post");
+    }
+    throw new Error("Failed to log post");
   }
 }

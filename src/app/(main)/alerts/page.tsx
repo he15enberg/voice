@@ -9,13 +9,17 @@ import { customToast } from "@/components/toast/custom-toast";
 export default function Page() {
   const [alerts, setAlerts] = useState<Alert[]>([]);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const fetchAlerts = async () => {
       try {
         const data = await getAllAlerts(); // calling the API
         setAlerts(data); // assuming data is an array of posts
-      } catch (err: any) {
-        console.log(err);
+      } catch (error: unknown) {
+        // Better type than 'any'
+        console.log(
+          error instanceof Error ? error.message : "Unknown error occurred"
+        );
       } finally {
         setLoading(false);
       }
@@ -23,6 +27,7 @@ export default function Page() {
 
     fetchAlerts();
   }, []);
+
   const handleDeleteAlert = async (alertId: string) => {
     try {
       await deleteAlert(alertId);
@@ -31,14 +36,18 @@ export default function Page() {
       customToast({
         message: "Your alert has been successfully deleted.",
       });
-    } catch (err: any) {
-      console.log(err);
+    } catch (error: unknown) {
+      // Better type than 'any'
+      console.log(
+        error instanceof Error ? error.message : "Unknown error occurred"
+      );
       customToast({
         message: "Failed to delete alert.",
         type: "error",
       });
     }
   };
+
   const handleAddAlert = async (alert: {
     title: string;
     message: string;
@@ -51,17 +60,20 @@ export default function Page() {
       customToast({
         message: "Your alert has been successfully created.",
       });
-    } catch (err: any) {
-      console.log(err);
+    } catch (error: unknown) {
+      // Better type than 'any'
+      console.log(
+        error instanceof Error ? error.message : "Unknown error occurred"
+      );
       customToast({
-        message: "Failed to delete alert.",
+        message: "Failed to create alert.", // Fixed text here
         type: "error",
       });
     }
   };
+
   return (
     <div className="p-4">
-      {/* <AlertsTable data={alerts} onAddAlert={handleAddAlert} /> */}
       {loading ? (
         <AlertSkeleton />
       ) : (

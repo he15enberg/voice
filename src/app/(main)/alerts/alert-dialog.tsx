@@ -22,7 +22,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { PlusIcon } from "lucide-react";
-import { Alert } from "@/types/alerts";
 
 // Define the alert type interface
 
@@ -66,7 +65,7 @@ function AddAlertDialogInTable({
       <DialogTrigger asChild>
         <Button variant="outline" size="sm">
           <PlusIcon />
-          <span className="hidden lg:inline">New Alert</span>
+          <span className="hidden lg:inline">New Alert&apos;</span>
         </Button>
       </DialogTrigger>
       <DialogContent>

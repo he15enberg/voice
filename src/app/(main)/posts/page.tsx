@@ -22,7 +22,7 @@ export default function Page() {
       try {
         const data = await getAllPosts(); // calling the API
         setPosts(data); // assuming data is an array of posts
-      } catch (err: any) {
+      } catch (error) {
       } finally {
         setLoading(false);
       }
@@ -46,7 +46,7 @@ export default function Page() {
       customToast({
         message: "Post Logged successfully.",
       });
-    } catch (err: any) {
+    } catch (error) {
       customToast({
         message: "Error logging post.",
         type: "error",

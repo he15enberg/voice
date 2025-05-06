@@ -33,10 +33,8 @@ export function useThemeSafe() {
 export function ToastWithTheme({
   type,
   message,
-  title,
   onClose,
 }: {
-  title?: string;
   message: string;
   type: ToastType;
   onClose: () => void;
@@ -92,26 +90,7 @@ export function ToastWithTheme({
 }
 
 // Main toast function that can be called from anywhere
-export function customToast({ type = "success", message, title }: ToastProps) {
-  const toastTypeInfo = {
-    success: {
-      icon: <CircleCheckBig size={20} />,
-      className: "bg-green-50 dark:bg-green-900/20",
-    },
-    error: {
-      icon: <CircleX size={20} />,
-      className: "bg-red-50 dark:bg-red-900/20 ",
-    },
-    warning: {
-      icon: <CircleAlert size={20} />,
-      className: "bg-amber-50 dark:bg-amber-900/20",
-    },
-    info: {
-      icon: <Info size={20} />,
-      className: "bg-blue-50 dark:bg-blue-900/20",
-    },
-  };
-
+export function customToast({ type = "success", message }: ToastProps) {
   return toast.custom(
     (id) => (
       <div
@@ -120,7 +99,6 @@ export function customToast({ type = "success", message, title }: ToastProps) {
         <ToastWithTheme
           type={type}
           message={message}
-          title={title}
           onClose={() => toast.dismiss(id)}
         />
       </div>

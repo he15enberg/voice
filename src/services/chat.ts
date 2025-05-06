@@ -17,8 +17,11 @@ export async function getAllGroupChats(): Promise<GroupChatModel[]> {
     const res = await api.get<ChatsApiResponse>("/group-chat");
     console.log(res.data.data);
     return res.data.data;
-  } catch (err: any) {
-    throw new Error(err.message || "Failed to fetch group chats");
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(error.message || "Failed to fetch group chats");
+    }
+    throw new Error("Failed to fetch group chats");
   }
 }
 
@@ -41,7 +44,10 @@ export async function addMessage(
     );
     console.log(res.data.data);
     return res.data.data;
-  } catch (err: any) {
-    throw new Error(err.message || "Failed to add message");
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error(error.message || "Failed to add message");
+    }
+    throw new Error("Failed to add message");
   }
 }
