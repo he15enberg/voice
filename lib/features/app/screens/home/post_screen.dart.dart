@@ -1,15 +1,11 @@
 import 'dart:convert';
 
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:voice/common/widgets/card/post_card.dart';
 import 'package:voice/common/widgets/chips/vote_chip.dart';
 import 'package:voice/common/widgets/icons/user_logo_icon.dart';
-import 'package:voice/common/widgets/modal/comments_model.dart';
 import 'package:voice/common/widgets/texts/section_heading.dart';
 import 'package:voice/common/widgets/texts/status_text.dart';
-import 'package:voice/features/app/controllers/post_controller.dart';
 import 'package:voice/features/app/models/post_model.dart';
 import 'package:voice/features/app/screens/home/widget/similar_posts.dart';
 import 'package:voice/utils/constants/colors.dart';
@@ -38,10 +34,8 @@ class PostScreen extends StatelessWidget {
   final PostModel post;
   @override
   Widget build(BuildContext context) {
-    final postController = PostController.instance;
     final height = THelperFunctions.screenHeight();
     final width = THelperFunctions.screenWidth();
-    final carouselSliderController = CarouselSliderController();
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(

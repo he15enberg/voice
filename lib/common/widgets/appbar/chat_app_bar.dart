@@ -3,7 +3,6 @@ import 'package:iconsax/iconsax.dart';
 import 'package:voice/common/widgets/icons/group_chat_icon.dart';
 import 'package:voice/features/app/models/group_chat_model.dart';
 import 'package:voice/features/app/screens/chat/group_chat_detail.dart';
-import 'package:voice/utils/constants/colors.dart';
 import 'package:voice/utils/constants/sizes.dart';
 
 class TChatAppBar extends StatelessWidget {

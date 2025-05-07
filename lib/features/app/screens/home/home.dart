@@ -17,7 +17,6 @@ import 'package:voice/features/app/screens/home/widget/home_appbar.dart';
 import 'package:voice/features/app/screens/home/widget/home_domains.dart';
 import 'package:voice/utils/constants/colors.dart';
 import 'package:voice/utils/constants/sizes.dart';
-import 'package:voice/utils/helpers/helper_functions.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

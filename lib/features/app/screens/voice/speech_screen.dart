@@ -197,10 +197,7 @@ class AnimatedConfidenceIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = THelperFunctions.isDarkMode(context);
-    final themeColor =
-        isDark
-            ? TColors.white.withOpacity(0.25)
-            : TColors.black.withOpacity(0.25);
+
     final reversePrimaryColor = isDark ? Colors.black : Colors.white;
     final primaryColor = !isDark ? Colors.black : Colors.white;
 

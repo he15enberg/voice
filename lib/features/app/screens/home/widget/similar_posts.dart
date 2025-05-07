@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
-import 'package:voice/common/widgets/appbar/appbar.dart';
 import 'package:voice/common/widgets/card/post_card.dart';
 import 'package:voice/common/widgets/loaders/empty_data_loader.dart';
 import 'package:voice/common/widgets/modal/comments_model.dart';
 import 'package:voice/common/widgets/shimmers/posts_shimmer.dart';
-import 'package:voice/features/app/controllers/domain_controller.dart';
 import 'package:voice/features/app/controllers/post_controller.dart';
-import 'package:voice/features/app/models/domain_model.dart';
-import 'package:voice/features/app/models/post_model.dart';
 import 'package:voice/features/app/screens/home/post_screen.dart.dart';
 import 'package:voice/utils/constants/sizes.dart';
 

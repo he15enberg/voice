@@ -8,7 +8,6 @@ import 'package:voice/common/widgets/shimmers/posts_shimmer.dart';
 import 'package:voice/features/app/controllers/domain_controller.dart';
 import 'package:voice/features/app/controllers/post_controller.dart';
 import 'package:voice/features/app/models/domain_model.dart';
-import 'package:voice/features/app/models/post_model.dart';
 import 'package:voice/features/app/screens/home/post_screen.dart.dart';
 
 class DomainScreen extends StatelessWidget {
