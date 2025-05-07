@@ -69,7 +69,7 @@ export async function getDomainOfIssue(issueString) {
     5. Hostel & Accommodation Services
     6. Security & Safety Management
     7. Transport & Campus Infrastructure
-    8. Toys, Games & Recreational Equipment
+    8. Gym, Park & Recreational Areas
     9. Infrastructure Maintenance & Repairs
 
     Issue Description: "${issueString}"
@@ -222,6 +222,8 @@ export async function extractIssueDetails(inputText) {
     "Anna University Swimming Pool",
     "Anna University Central Library",
     "Anna University Hostel",
+    "Anna University Main Ground",
+    "Anna University Gym",
     "Department of Computer Science & Engineering",
     "Department of Electronics & Communication Engineering",
     "Department of Civil Engineering",
@@ -286,3 +288,4 @@ If the text is inappropriate or irrelevant, set "success" to false and do not in
   const result = JSON.parse(response.text);
   return result;
 }
+await extractIssueDetails("Tap water leak in hostel").then(console.log);
