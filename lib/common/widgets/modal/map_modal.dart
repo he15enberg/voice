@@ -10,6 +10,8 @@ const List<String> locations = [
   "Anna University Swimming Pool",
   "Anna University Central Library",
   "Anna University Hostel",
+  "Anna University Main Ground",
+  "Anna University Gym",
   "Department of Computer Science & Engineering",
   "Department of Electronics & Communication Engineering",
   "Department of Civil Engineering",

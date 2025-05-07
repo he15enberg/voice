@@ -7,6 +7,7 @@ import 'package:voice/common/widgets/images/circular_image.dart';
 import 'package:voice/common/widgets/loaders/empty_data_loader.dart';
 import 'package:voice/common/widgets/modal/comments_model.dart';
 import 'package:voice/common/widgets/shimmers/posts_shimmer.dart';
+import 'package:voice/common/widgets/shimmers/profile_shimmer.dart';
 import 'package:voice/common/widgets/shimmers/shimmer.dart';
 import 'package:voice/common/widgets/texts/section_heading.dart';
 import 'package:voice/features/app/controllers/post_controller.dart';
@@ -36,125 +37,135 @@ class ProfileScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(TSizes.defaultSpace),
-              child: Column(
-                children: [
-                  SizedBox(
-                    width: double.infinity,
-                    child: Column(
-                      children: [
-                        Obx(() {
-                          final networkImage =
-                              controller.user.value.profilePicture;
+            Obx(() {
+              if (controller.profileLoading.value) {
+                return const TProfileShimmer();
+              }
 
-                          if (controller.imageUploading.value) {
-                            return const TShimmerEffect(
-                              height: 80.0,
-                              width: 80.0,
-                              radius: 80.0,
-                            );
-                          } else {
-                            return networkImage.isNotEmpty
-                                ? CircleAvatar(
-                                  radius: 42.5,
-                                  backgroundColor: TColors.primary,
-                                  foregroundColor: TColors.primary,
-                                  child: TCircularImage(
-                                    image: networkImage,
-                                    fit: BoxFit.cover,
+              return Padding(
+                padding: const EdgeInsets.all(TSizes.defaultSpace),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      width: double.infinity,
+                      child: Column(
+                        children: [
+                          Obx(() {
+                            final networkImage =
+                                controller.user.value.profilePicture;
+
+                            if (controller.imageUploading.value) {
+                              return const TShimmerEffect(
+                                height: 80.0,
+                                width: 80.0,
+                                radius: 80.0,
+                              );
+                            } else {
+                              return networkImage.isNotEmpty
+                                  ? CircleAvatar(
+                                    radius: 42.5,
+                                    backgroundColor: TColors.primary,
+                                    foregroundColor: TColors.primary,
+                                    child: TCircularImage(
+                                      image: networkImage,
+                                      fit: BoxFit.cover,
+                                      width: 80.0,
+                                      height: 80.0,
+                                      isNetworkImage: networkImage.isNotEmpty,
+                                    ),
+                                  )
+                                  : Container(
+                                    padding: EdgeInsets.all(5),
                                     width: 80.0,
                                     height: 80.0,
-                                    isNetworkImage: networkImage.isNotEmpty,
-                                  ),
-                                )
-                                : Container(
-                                  padding: EdgeInsets.all(5),
-                                  width: 80.0,
-                                  height: 80.0,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color:
-                                        isDark ? TColors.white : TColors.black,
-                                  ),
-                                  child: Icon(
-                                    Iconsax.user_octagon,
-                                    size: 55,
-                                    color:
-                                        !isDark ? TColors.white : TColors.black,
-                                  ),
-                                );
-                          }
-                        }),
-                        TextButton(
-                          onPressed: () => {},
-                          child: Text(
-                            "Change Profile Picture",
-                            style: Theme.of(context).textTheme.bodyMedium!
-                                .apply(color: TColors.primary),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color:
+                                          isDark
+                                              ? TColors.white
+                                              : TColors.black,
+                                    ),
+                                    child: Icon(
+                                      Iconsax.user_octagon,
+                                      size: 55,
+                                      color:
+                                          !isDark
+                                              ? TColors.white
+                                              : TColors.black,
+                                    ),
+                                  );
+                            }
+                          }),
+                          TextButton(
+                            onPressed: () => {},
+                            child: Text(
+                              "Change Profile Picture",
+                              style: Theme.of(context).textTheme.bodyMedium!
+                                  .apply(color: TColors.primary),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  //Details
-                  // SizedBox(
-                  //   height: TSizes.spaceBtwItems / 2,
-                  // ),
-                  const SizedBox(height: TSizes.spaceBtwItems),
-                  const TSectionHeading(
-                    title: "Profile Information",
-                    showActionButton: false,
-                  ),
-                  const SizedBox(height: TSizes.spaceBtwItems),
-
-                  TProfileMenu(
-                    title: "Username",
-                    value: controller.user.value.userName,
-                    onPressed: () {},
-                  ),
-
-                  TProfileMenu(
-                    title: "User ID",
-                    icon: Iconsax.copy,
-                    needIcon: true,
-                    value: controller.user.value.id,
-                    onPressed: () {},
-                  ),
-                  TProfileMenu(
-                    title: "Email",
-                    value: controller.user.value.email,
-                    onPressed: () {},
-                  ),
-                  TProfileMenu(
-                    title: "Phone",
-                    value: controller.user.value.phoneNumber,
-                    onPressed: () {},
-                  ),
-                  TProfileMenu(
-                    title: "Role",
-                    value: controller.user.value.role,
-                    onPressed: () {},
-                  ),
-                  const SizedBox(height: TSizes.spaceBtwItems),
-
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        controller.logout();
-                      },
-                      child: Text(
-                        "Logout",
-                        style: Theme.of(
-                          context,
-                        ).textTheme.titleMedium!.apply(color: Colors.white),
+                        ],
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ),
+                    //Details
+                    // SizedBox(
+                    //   height: TSizes.spaceBtwItems / 2,
+                    // ),
+                    const SizedBox(height: TSizes.spaceBtwItems),
+                    const TSectionHeading(
+                      title: "Profile Information",
+                      showActionButton: false,
+                    ),
+                    const SizedBox(height: TSizes.spaceBtwItems),
+
+                    TProfileMenu(
+                      title: "Username",
+                      value: controller.user.value.userName,
+                      onPressed: () {},
+                    ),
+
+                    TProfileMenu(
+                      title: "User ID",
+                      icon: Iconsax.copy,
+                      needIcon: true,
+                      value: controller.user.value.id,
+                      onPressed: () {},
+                    ),
+                    TProfileMenu(
+                      title: "Email",
+                      value: controller.user.value.email,
+                      onPressed: () {},
+                    ),
+                    TProfileMenu(
+                      title: "Phone",
+                      value: controller.user.value.phoneNumber,
+                      onPressed: () {},
+                    ),
+                    TProfileMenu(
+                      title: "Role",
+                      value: controller.user.value.role,
+                      onPressed: () {},
+                    ),
+                    const SizedBox(height: TSizes.spaceBtwItems),
+
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          controller.logout();
+                        },
+                        child: Text(
+                          "Logout",
+                          style: Theme.of(
+                            context,
+                          ).textTheme.titleMedium!.apply(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }),
             const SizedBox(height: TSizes.spaceBtwItems),
             Column(
               children: [

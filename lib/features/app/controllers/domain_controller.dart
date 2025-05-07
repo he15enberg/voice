@@ -50,7 +50,7 @@ final List<DomainModel> domainList = [
   ),
   DomainModel(
     id: '8',
-    name: 'Toys, Games & Recreational Equipment',
+    name: "Gym, Park & Recreational Areas",
     image: TImages.clothIcon,
     isFeatured: true,
   ),
