@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import { signIn } from "@/services/auth";
 import { customToast } from "./toast/custom-toast";
 import { Eye, EyeOff } from "lucide-react";
+import Link from "next/link";
 
 export function SignInForm({
   className,
@@ -114,9 +115,9 @@ export function SignInForm({
             </div>
             <div className="mt-4 text-center text-sm">
               Don&apos;t have an account?{" "}
-              <a href="#" className="underline underline-offset-4">
+              <Link href="/signup" className="underline underline-offset-4">
                 Sign up
-              </a>
+              </Link>
             </div>
           </form>
         </CardContent>
