@@ -65,29 +65,31 @@ export default function Page() {
               className="cursor-pointer hover:shadow-md transition-shadow"
               onClick={() => handleChatClick(groupChat)}
             >
-              <div className="flex items-center gap-2 border p-2 rounded-md">
+              <div className="flex items-center gap-2 border p-2 rounded-md overflow-hidden">
                 <div className="h-10 w-10 aspect-square rounded-full bg-primary text-primary-foreground flex items-center justify-center shrink-0">
                   <AudioLines />
                 </div>
-                <div className="flex flex-col w-full">
-                  <div className="flex items-center gap-1 border rounded-sm px-2 py-1 text-xs text-muted-foreground">
+                <div className="flex flex-col w-full min-w-0">
+                  <div className="flex items-center gap-1 border rounded-sm px-2 py-1 text-xs text-muted-foreground min-w-[100px] max-w-full overflow-hidden">
                     <div className="h-3 w-3 bg-blue-500 rounded-full shrink-0"></div>
-                    <div className="truncate">
+                    <div className="truncate w-full">
                       {groupChat.postGroup?.domain || "No domain"}
                     </div>
                   </div>
-                  <div className="truncate font-medium">{groupChat.name}</div>
-                  <div className="truncate font-medium text-sm text-muted-foreground">
+                  <div className="truncate w-full font-medium">
+                    {groupChat.name}
+                  </div>
+                  <div className="truncate w-full font-medium text-sm text-muted-foreground">
                     {groupChat.postGroup?.location || "No location"}
                   </div>
-                  <div className="flex items-center gap-2 mt-1">
+                  <div className="flex items-center gap-2 mt-1 w-full">
                     <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                      <Users size={15} />
-                      <div>{`${groupChat.members.length} members`}</div>
+                      <Users size={15} className="shrink-0" />
+                      <div className="truncate">{`${groupChat.members.length} members`}</div>
                     </div>
                     <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                      <SquaresExclude size={15} />
-                      <div>{`${
+                      <SquaresExclude size={15} className="shrink-0" />
+                      <div className="truncate">{`${
                         groupChat.postGroup?.posts?.length || 0
                       } posts`}</div>
                     </div>
