@@ -22,7 +22,7 @@ export const createPost = async (req, res) => {
     }
 
     // Get the user's name from DB
-    const user = await User.findById(userId).select("name");
+    const user = await User.findById(userId).select("name role");
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -74,9 +74,21 @@ export const createPost = async (req, res) => {
     if (matchedGroup) {
       matchedGroup.posts.push(savedPost._id);
       await matchedGroup.save();
+      // Find the corresponding group chat
+      const groupChat = await GroupChat.findOne({
+        postGroup: matchedGroup._id,
+      });
+
+      if (groupChat && !groupChat.members.includes(userId)) {
+        groupChat.members.push(userId);
+        await groupChat.save();
+      }
     } else {
       const similarQueries = await generateSimilarIssueQueries(title + desc); // should return array of 5 strings
       const groupChatName = await generateGroupChatName(similarQueries); // should return array of 5 strings
+
+      // Fetch all admin users
+      const adminUsers = await User.find({ role: "Admin" }).select("_id");
 
       const newGroup = new PostGroup({
         similarQueries,
@@ -87,10 +99,16 @@ export const createPost = async (req, res) => {
 
       const savedGroup = await newGroup.save();
 
+      // Create members array including the user who created the post and all admins
+      const members = [
+        ...adminUsers.map((admin) => admin._id.toString()),
+        userId,
+      ];
+
       await GroupChat.create({
         postGroup: savedGroup._id,
         name: groupChatName,
-        members: [userId],
+        members,
         messages: [
           {
             userId,
