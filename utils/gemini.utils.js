@@ -218,24 +218,37 @@ ${similarQueries.map((q, idx) => `${idx + 1}. ${q}`).join("\n")}
 
 export async function extractIssueDetails(inputText) {
   const locations = [
-    "Anna University Main Building",
-    "Anna University Swimming Pool",
-    "Anna University Central Library",
-    "Anna University Hostel",
-    "Anna University Main Ground",
-    "Anna University Gym",
-    "Department of Computer Science & Engineering",
-    "Department of Electronics & Communication Engineering",
-    "Department of Civil Engineering",
-    "Department of Information Science and Technology",
-    "Department of Industrial Engineering",
-    "Department of Mechanical Engineering",
-    "Department of Biotechnology",
-    "Department of Nuclear Physics",
+    "Main Building",
+    "Swimming Pool",
+    "Central Library",
+    "Hostel",
+    "Main Ground",
+    "Gym",
+    "Canteen",
+    "Auditorium",
+    "Administrative Block",
+    "Student Activity Center",
+    "Health Centre",
+    "Placement Cell",
+    "Computer Science Department",
+    "Electronics & Communication Department",
+    "Civil Engineering Department",
+    "Information Science Department",
+    "Industrial Engineering Department",
+    "Mechanical Engineering Department",
+    "Biotechnology Department",
+    "Nuclear Physics Department",
+    "Physics Lab",
+    "Chemistry Lab",
+    "Parking Lot",
+    "ATM Center",
+    "Faculty Room",
+    "Exam Cell",
+    "Seminar Hall",
+    "Conference Room",
   ];
-
   const prompt = `
-You are a helpful assistant in an issue reporting system for Anna University. Extract the issue's title, detailed description, and location from the given text, ONLY if the issue is serious and relevant to real-world campus services like hostel, sanitation, safety, transport, infrastructure, etc.
+You are a helpful assistant in an issue reporting system for a College Campus. Extract the issue's title, detailed description, and location from the given text, ONLY if the issue is serious and relevant to real-world campus services like hostel, sanitation, safety, transport, infrastructure, etc.
 
 Rules:
 - Reject input if it's inappropriate, sarcastic, a joke, off-topic (like movies or games), gibberish, or cannot be understood clearly.
@@ -288,4 +301,3 @@ If the text is inappropriate or irrelevant, set "success" to false and do not in
   const result = JSON.parse(response.text);
   return result;
 }
-await extractIssueDetails("Tap water leak in hostel").then(console.log);
