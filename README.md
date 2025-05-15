@@ -6,7 +6,9 @@
 
 ---
 
-## 📱 Mobile App — User Portal (Flutter)
+## 📱 Mobile Apqsqsqsqsqp — User Portal (Flutter)
+
+tegtg
 
 - 🎤 **Voice-based Issue Reporting**
 - 📝 Text-based issue entry
@@ -27,13 +29,13 @@
 
 ## ⚙️ Tech Stack
 
-| Platform      | Tech Used                            |
-|--------------|--------------------------------------|
-| 📱 Mobile     | `Flutter`, `GetX`                   |
-| 🌐 Web        | `Next.js`, `Tailwind`, `Shadcn UI`  |
-| 🧠 AI         | `Gemini`                             |
-| 🔧 Backend    | `Node.js`, `Express.js`              |
-| 🛢️ Database   | `MongoDB`                            |
+| Platform    | Tech Used                          |
+| ----------- | ---------------------------------- |
+| 📱 Mobile   | `Flutter`, `GetX`                  |
+| 🌐 Web      | `Next.js`, `Tailwind`, `Shadcn UI` |
+| 🧠 AI       | `Gemini`                           |
+| 🔧 Backend  | `Node.js`, `Express.js`            |
+| 🛢️ Database | `MongoDB`                          |
 
 ---
 
