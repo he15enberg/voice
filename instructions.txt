@@ -8,3 +8,17 @@ https://voice-taupe.vercel.app
 
 Backend link:
 https://voice-backend-two.vercel.app
+
+#Admin Credentials
+heisenberg123@gmail.com
+Heisenberg@123
+tyler123@gmail.com
+Tyler@123
+
+#Admin Credentials
+jesse123@gmail.com
+Jesse@123
+jack123@gmail.com
+Jack@123
+travis123@gmail.com
+Travis@123
